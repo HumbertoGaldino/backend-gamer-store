@@ -1,17 +1,19 @@
-import { Controller, Get } from '@nestjs/common';
+import { Controller, Get, Param } from '@nestjs/common';
 import { Produto, produtos } from 'src/core';
 
 @Controller('produtos')
 export class ProdutoController {
-    @Get()
-    async obterProdutos(): Promise<Produto[]>{
-        await this.esperarSegundos(2);
-        return produtos;
-    }
+  @Get()
+  async obterProdutos(): Promise<Produto[]> {
+    return produtos.map((produto) => ({
+      ...produto,
+      especificacoes: { destaque: produto.especificacoes.destaque },
+    }));
+  }
 
-    esperarSegundos(segundos: number): Promise<void>{
-        return new Promise((resolve)=>{
-            setTimeout(resolve, segundos * 1000);
-        })
-    }
+  @Get(':id')
+  async obterProdutoPorId(@Param('id') id: string): Promise<Produto | null> {
+    const produto = produtos.find((produto) => produto.id === +id);
+    return produto ?? null;
+  }
 }
