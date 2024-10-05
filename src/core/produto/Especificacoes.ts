@@ -1,4 +1,4 @@
 export default interface Especificacoes {
-    destaque: string
-    [chave: string]: string //para criar novos atributos
+  destaque: string;
+  [chave: string]: string | number | boolean; //para criar novos atributos
 }

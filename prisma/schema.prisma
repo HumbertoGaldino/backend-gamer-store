@@ -1,0 +1,31 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+  relationMode = "prisma"
+}
+
+model Produto{
+  id          Int      @id @default(autoincrement())
+  nome        String
+  descricao   String
+  marca       String
+  modelo      String
+  imagem      String
+  nota        Float
+  videoReview String
+  tags        String[]
+
+  precoBase        Float
+  precoPromocional Float
+  menorPreco       Float
+  maiorPreco       Float
+  precoMedio       Float
+
+  especificacoes   Json
+  
+  @@map("produtos") //nome da tabela a ser criada
+}
